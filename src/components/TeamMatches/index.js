@@ -63,7 +63,7 @@ class TeamMatches extends Component {
   renderLatestMatch = () => {
     const {teamRecords} = this.state
     const {latestMatchDetails, recentMatches} = teamRecords
-    console.log(latestMatchDetails)
+
     return (
       <div>
         <LateshMatch
@@ -93,9 +93,8 @@ class TeamMatches extends Component {
         <img
           className="team-thumbnail"
           src={teamRecords.teamBannerUrl}
-          alt={`team banner ${teamId}`}
+          alt="team banner"
         />
-        {this.renderLoader}
         {isLoading ? this.renderLoader() : this.renderLatestMatch()}
       </div>
     )

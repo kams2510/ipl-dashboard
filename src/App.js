@@ -4,8 +4,6 @@ import Home from './components/Home'
 import NotFound from './components/NotFound'
 import TeamMatches from './components/TeamMatches'
 
-const c = console.log.bind(document)
-
 const App = () => (
   <BrowserRouter>
     <Switch>
