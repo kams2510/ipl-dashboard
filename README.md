@@ -186,7 +186,7 @@ Use these files to complete the implementation:
 - In order to display the given animated loader, pass the `type` and `color` props to the `Loader` component with values as **Oval** and **#ffffff** , respectively
 
   ```
-  <Loader type="Oval" color="#ffffff" height={50} width={50} />
+  
   ```
 
 </details>
@@ -205,7 +205,7 @@ Use these files to complete the implementation:
 - The API responses received from the given api URLs should be converted to camel case
 - Wrap the `Loader` component with an HTML container element and add the `testid` attribute value as `loader` to it as shown below
   ```
-  <div testid="loader">
+  <div data-testid="loader">
       <Loader type="Oval" color="#ffffff" height={50} width={50} />
   </div>
   ```

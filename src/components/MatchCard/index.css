@@ -1,1 +1,23 @@
 /* Write your CSS here */
+.recent-match-card {
+  background-color: blueviolet;
+  border-radius: 5px;
+  padding: 4px;
+  font-family: 'Bree Serif';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 30vw;
+  text-align: center;
+  margin: 10px 10px;
+}
+
+.recent-match-card > img {
+  height: 50px;
+  width: 50px;
+}
+
+.recent-match-card > h1 {
+  font-size: 18px;
+}

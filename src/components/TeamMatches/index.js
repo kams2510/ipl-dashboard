@@ -1,19 +1,22 @@
 // Write your code here
 import './index.css'
 import {Component} from 'react'
+import Loader from 'react-loader-spinner'
 import LateshMatch from '../LatestMatch'
-
-const c = console.log.bind(document)
+import MatchCard from '../MatchCard'
 
 class TeamMatches extends Component {
-  state = {teamRecords: [], teamId: ''}
+  state = {teamRecords: [], teamId: '', isLoading: true}
 
   componentDidMount() {
     this.fetchTeamRecords()
   }
 
   fetchTeamRecords = async () => {
-    const teamId = this.props.match.params.id
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
+    const teamId = id
     const response = await fetch(`https://apis.ccbp.in/ipl/${teamId}`)
     const data = await response.json()
     const formattedDta = {
@@ -32,7 +35,7 @@ class TeamMatches extends Component {
       matchStatus: formattedDta.latestMatchDetails.match_status,
       result: formattedDta.latestMatchDetails.result,
       secondInnings: formattedDta.latestMatchDetails.second_innings,
-      umpire: formattedDta.latestMatchDetails.umpire,
+      umpires: formattedDta.latestMatchDetails.umpires,
       venue: formattedDta.latestMatchDetails.venue,
     }
 
@@ -46,33 +49,54 @@ class TeamMatches extends Component {
       matchStatus: each.match_status,
       result: each.result,
       secondInnings: each.second_innings,
-      umpire: each.umpire,
+      umpires: each.umpires,
       venue: each.venue,
     }))
 
     this.setState({
       teamRecords: formattedDta,
       teamId: teamId.toLocaleLowerCase(),
+      isLoading: false,
     })
   }
 
   renderLatestMatch = () => {
-    const {latestMatchDetails} = this.state.teamRecords
+    const {teamRecords} = this.state
+    const {latestMatchDetails, recentMatches} = teamRecords
+    console.log(latestMatchDetails)
     return (
       <div>
-        <LateshMatch matchDetail={latestMatchDetails} />
+        <LateshMatch
+          latestMatchDetails={latestMatchDetails}
+          key={latestMatchDetails.id}
+        />
+        <ul className="recent-match-container">
+          {recentMatches.map(each => (
+            <MatchCard matchDetail={each} key={each.id} />
+          ))}
+        </ul>
       </div>
     )
   }
 
+  renderLoader = () => (
+    <div data-testid="loader" className="loader-container">
+      <Loader type="Oval" color="#ffffff" height={50} width={50} />
+    </div>
+  )
+
   render() {
-    const {teamRecords, teamId} = this.state
-    const {latestMatchDetails} = teamRecords
-    c()
+    const {isLoading, teamId, teamRecords} = this.state
+
     return (
       <div className={`${teamId} team-matches-container`}>
-        <img className="team-thumbnail" src={teamRecords.teamBannerUrl} />
-        {this.renderLatestMatch()}
+        <img
+          className="team-thumbnail"
+          src={teamRecords.teamBannerUrl}
+          alt={`team banner ${teamId}`}
+        />
+        {this.renderLoader}
+        {isLoading ? this.renderLoader() : this.renderLatestMatch()}
       </div>
     )
   }

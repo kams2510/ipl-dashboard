@@ -4,8 +4,6 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import TeamCard from '../TeamCard'
 
-const c = console.log.bind(document)
-
 class Home extends Component {
   state = {teamDetails: [], isLoading: true}
 
@@ -37,7 +35,7 @@ class Home extends Component {
   }
 
   render() {
-    const {teamDetails, isLoading} = this.state
+    const {isLoading} = this.state
     const loader = (
       <div data-testid="loader">
         <Loader type="Oval" color="#ffffff" height={50} width={50} />
